@@ -6,8 +6,7 @@ from data.models import *
 from django.shortcuts import render
 from django.http import HttpResponse
 
-
-
+from datetime import date
 
 
 def scrape_data():
@@ -24,6 +23,7 @@ def scrape_data():
     details =[]
 
     for data in rows:
+        date_published = date.today()
         company_name_symbol = data.find_all('td')[0].text
         change_percent_value= data.find_all('td')[3].text
         high_value = data.find_all('td')[4].text
@@ -36,7 +36,7 @@ def scrape_data():
 
         item = LiveTradingData(company_name_symbol= company_name_symbol, high_value= float(high_value.replace(",","")),
                                     open_value= float(high_value.replace(",","")), low_value=float(open_value.replace(",","")),
-                                    change_percent_value=float(change_percent_value.replace(",","")),qty=float(qty.replace(",","")))
+                                    change_percent_value=float(change_percent_value.replace(",","")),qty=float(qty.replace(",","")), date_published=date_published)
 
         details.append(item.save())
 
