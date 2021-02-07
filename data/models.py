@@ -4,7 +4,7 @@ from django.db import models
  
 
 class LiveTradingData(models.Model):
-    # date_value = models.CharField(max_length=40)
+    date_published = models.CharField(max_length=40)
     company_name_symbol = models.CharField(max_length= 20, null = True)
     high_value = models.FloatField(blank= True, null= True)
     low_value = models.FloatField(blank = True, null= True)
