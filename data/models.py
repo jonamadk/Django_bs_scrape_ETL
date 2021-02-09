@@ -4,14 +4,16 @@ from django.db import models
  
 
 class LiveTradingData(models.Model):
-    date_published = models.CharField(max_length=40)
+    
     company_name_symbol = models.CharField(max_length= 20, null = True)
     high_value = models.FloatField(blank= True, null= True)
     low_value = models.FloatField(blank = True, null= True)
     open_value = models.FloatField(blank= True, null = True)
     qty = models.FloatField(blank = True, null = True)
     change_percent_value = models.FloatField(blank = True, null = True)
-    
+
+    date_value = models.CharField(max_length =40,null=True)
+
 
 
     class Meta:
@@ -24,7 +26,6 @@ class LiveTradingData(models.Model):
     def __unicode__(self):
         return  self.company_name_symbol
 
-# class TableData(models.Model):
-#     published_date = models.DateField(auto_now_add=True, blank=True, null=True)
+
 
 

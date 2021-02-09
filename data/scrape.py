@@ -2,16 +2,15 @@
 import requests
 import bs4
 from bs4 import BeautifulSoup 
-from data.models import *
+from .models import *
 from django.shortcuts import render
 from django.http import HttpResponse
-<<<<<<< HEAD
 from datetime import date
 import pdb
-=======
+from data.models import LiveTradingData
+import schedule
+import time
 
-from datetime import date
->>>>>>> test
 
 
 def scrape_data():
@@ -28,7 +27,8 @@ def scrape_data():
     details =[]
     
     for data in rows:
-        date_published = date.today()
+
+        date_today = date.today()
         company_name_symbol = data.find_all('td')[0].text
         change_percent_value= data.find_all('td')[3].text
         high_value = data.find_all('td')[4].text
@@ -41,15 +41,21 @@ def scrape_data():
 
         item = LiveTradingData(company_name_symbol= company_name_symbol, high_value= float(high_value.replace(",","")),
                                     open_value= float(high_value.replace(",","")), low_value=float(open_value.replace(",","")),
-<<<<<<< HEAD
+
                                     change_percent_value=float(change_percent_value.replace(",","")),qty=float(qty.replace(",","")),date_value=date_today)
-=======
-                                    change_percent_value=float(change_percent_value.replace(",","")),qty=float(qty.replace(",","")), date_published=date_published)
->>>>>>> test
+
 
         details.append(item.save())
 
     return details
+
+
+def task(*args, **kwargs):
+  
+    schedule.every(10).seconds.do(scrape_data)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 

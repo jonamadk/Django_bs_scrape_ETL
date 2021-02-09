@@ -1,27 +1,27 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.http import HttpResponse
-from data.scrape import *
-import schedule
-import time
+from .scrape import scrape_data
+from .models import LiveTradingData
+from .serializers import LiveTradingDataSerializer
+
+from rest_framework import generics
 
 
 
-def home_view(*args, **kwargs):
+
+# Create your views here.
+class LiveTradingDataList(generics.ListCreateAPIView):
     
-    schedule.every(10).seconds.do(scrape_data)
+    queryset = LiveTradingData.objects.all()
+    serializer_class = LiveTradingDataSerializer
+  
 
+    
 
-    while True:
-        schedule.run_pending()
-        time.sleep(1) 
+  
+class IndividualLiveTradingDataDetail(generics.RetrieveUpdateDestroyAPIView):
 
+    queryset = LiveTradingData.objects.all()
+    serializer_class = LiveTradingDataSerializer
+  
 
-    return HttpResponse("<h1>Scrape Home <h2>")
-
-
-
-
-
-
-
- 
