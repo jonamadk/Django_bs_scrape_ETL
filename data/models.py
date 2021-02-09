@@ -11,7 +11,9 @@ class LiveTradingData(models.Model):
     open_value = models.FloatField(blank= True, null = True)
     qty = models.FloatField(blank = True, null = True)
     change_percent_value = models.FloatField(blank = True, null = True)
+
     date_value = models.CharField(max_length =40,null=True)
+
 
 
     class Meta:

@@ -11,6 +11,8 @@ from data.models import LiveTradingData
 import schedule
 import time
 
+
+
 def scrape_data():
 
     url = "https://merolagani.com/LatestMarket.aspx"
@@ -39,11 +41,14 @@ def scrape_data():
 
         item = LiveTradingData(company_name_symbol= company_name_symbol, high_value= float(high_value.replace(",","")),
                                     open_value= float(high_value.replace(",","")), low_value=float(open_value.replace(",","")),
+
                                     change_percent_value=float(change_percent_value.replace(",","")),qty=float(qty.replace(",","")),date_value=date_today)
+
 
         details.append(item.save())
 
     return details
+
 
 def task(*args, **kwargs):
   
@@ -51,4 +56,24 @@ def task(*args, **kwargs):
     while True:
         schedule.run_pending()
         time.sleep(1)
+
+
+
+
+
+
+
+
+            
+        
+    
+
+
+
+        
+
+
+        
+
+
 
